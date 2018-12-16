@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Panel } from 'react-bootstrap'
 import Map from '../components/Map'
+import './MapContainer.css'
 
 class MapContainer extends Component {
   render () {
