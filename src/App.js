@@ -1,26 +1,32 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Grid, Row, Col} from 'react-bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import MapContainer from './containers/MapContainer'
+import SearchBox from './containers/SearchBox'
+import SearchResultList from './containers/SearchResultList'
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div className="app">
+        <Grid fluid className="app-container">
+          <Row className="search-row">
+            <Col xs={12}>
+              <SearchBox/>
+            </Col>
+          </Row>
+          <Row className="search-result-row">
+            <Col xs={12} sm={4} className='search-result-col'>
+              <SearchResultList/>
+            </Col>
+            <Col xs={12} sm={8} className='search-result-col'>
+              <MapContainer/>
+            </Col>
+          </Row>
+        </Grid>
       </div>
+
     );
   }
 }
