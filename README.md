@@ -1,4 +1,27 @@
+The purpose of this project to show OpenStreetMap features on the map.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+The nominatim api is used to show places.
+
+Mapbox GL JS is used for map api.
+
+React Bootstrap is used for UI framework.
+
+## Use Cases
+
+Users can search the places on the map.
+* Users can make query for zoom levels > 14.
+* Users can enter feature type defined on OSM: https://wiki.openstreetmap.org/wiki/Map_Features
+
+Users can interact with the results
+* Users can select the features on the map.
+
+System can show the search results
+* System will display the query results on the map. Results can be point, polygon or linesegment
+* System will higlight the feature on the map on mouseovers  
+* System will show popup on the map if user selects the feature on the map 
+
 
 ## Available Scripts
 
