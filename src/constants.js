@@ -25,6 +25,11 @@ out;
 out skel qt;`.replace(/\n/gm, '')
 }
 
+const AppStates = {
+  LOADING: 'LOADING',
+  IDLE: 'IDLE',
+}
+
 const initialGeoJSON = convertOSMOverpassResultToGeoJSON(overpassApiInitialResultData)
 const initialSearch = 'landuse';
 
@@ -41,4 +46,4 @@ const InitialState = {
 const SearchOSMKeys = ['landuse', 'tourism'];
 
 export { AccessTokenMapboxGL, OverpassSearchUrl, OverpassAPIUrl, GetOverpassSearchParams }
-export { InitialState, SearchOSMKeys }
+export { InitialState, SearchOSMKeys, AppStates }
