@@ -25,7 +25,7 @@ class SearchBox extends Component {
   onSearchFormSubmit (event) {
     event.preventDefault()
     // We need to fetch From Overpass Api
-    this.props.fetchSearchResult(this.state.value);
+    this.props.fetchSearchResult(this.state.value, this.props.bounds);
   }
 
   render () {
@@ -49,10 +49,16 @@ class SearchBox extends Component {
   }
 }
 
+function mapStateToProps (state) {
+  return {
+    bounds: state.map.bounds
+  }
+}
+
 
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({fetchSearchResult}, dispatch)
 }
 
-export default connect(null, mapDispatchToProps)(SearchBox)
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBox)
 
