@@ -40,6 +40,7 @@ Actors: User, Application
 #### Makes the search
 * API parameters are prepared based on the visible area on the map and selected key.
 * Make API request to https://overpass-api.de/api/interpreter.
+* Notes: [overpass-turbo](https://overpass-turbo.eu/) used to generate template of Overpass API params.
 
 #### Blocks the search on some cases
 * To reduce API call result size, zoom level 14 and high is allowed.
