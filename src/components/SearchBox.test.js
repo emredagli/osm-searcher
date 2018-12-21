@@ -1,15 +1,17 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import SearchBox from './SearchBox';
+import Root from '../Root';
 
 it('renders without crashing', () => {
   shallow(<SearchBox />);
 });
 
+let wrapped;
+
 describe('SearchBox', () => {
-  let wrapped;
   beforeEach(() => {
-    wrapped = mount(<SearchBox />);
+    wrapped = mount(<Root><SearchBox /></Root>);
   });
 
   it('shows a dropdowns', () => {
