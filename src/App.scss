@@ -1,0 +1,48 @@
+.app {
+  height: 100%;
+}
+
+.app-container {
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  padding-top: 15px;
+
+  .search-row {
+    flex: 0 1 auto;
+  }
+
+  .search-result-row {
+    flex: 1 1 auto;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    height: 100%;
+
+    > div[class*='col-'] {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      flex: 0 auto;
+      height: 100%;
+    }
+
+    .panel {
+      display: -webkit-flex;
+      display: flex;
+      flex: 1;
+      flex-flow: column nowrap;
+    }
+
+    .panel .panel-body {
+      display: flex;
+      -webkit-flex: 1;
+      flex: 1;
+    }
+  }
+}

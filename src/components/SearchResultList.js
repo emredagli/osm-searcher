@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Panel, ListGroup } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import './SearchResultList.css'
+import './SearchResultList.scss'
 
 function FeatureListItem ({propValue, name}) {
   return (

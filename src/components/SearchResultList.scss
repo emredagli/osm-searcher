@@ -1,0 +1,29 @@
+.list-group {
+  max-width: 100%;
+}
+
+.search-result-panel {
+  max-width: 100%;
+
+  .list-group {
+    overflow: auto;
+  }
+
+  .list-group-item {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &:hover {
+      color: #495057;
+      text-decoration: none;
+      background-color: #f8f9fa;
+      cursor: pointer;
+    }
+
+    span:first-of-type {
+      font-weight: bold;
+    }
+  }
+}
+
