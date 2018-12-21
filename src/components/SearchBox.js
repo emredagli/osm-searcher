@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { FormGroup, Button, InputGroup, FormControl } from 'react-bootstrap'
-import PropTypes from 'prop-types'
 
 class SearchBox extends Component {
   constructor (props) {
@@ -33,8 +32,6 @@ class SearchBox extends Component {
     )
   }
 }
-
-SearchBox.propTypes = {}
 
 export default SearchBox
 
