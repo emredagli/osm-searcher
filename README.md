@@ -1,27 +1,67 @@
-The purpose of this project to show OpenStreetMap features on the map.
+## OSM Searcher
+
+The purpose of this project is to show filtered OpenStreetMap features on the map.
+
+User can select a "key" value and application shows OSM features on the list and on the map.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-The nominatim api is used to show places.
+The [Overpass API](https://wiki.openstreetmap.org/wiki/Overpass_API) is used to fetch OSM data on the map.
 
-Mapbox GL JS is used for map api.
+Mapbox GL JS map is used.
 
 React Bootstrap is used for UI framework.
 
-## Use Cases
+## OSM Features
 
-Users can search the places on the map.
-* Users can make query for zoom levels > 14.
-* Users can enter feature type defined on OSM: https://wiki.openstreetmap.org/wiki/Map_Features
+OSM vector data contains features and its properties. Properties are ["key"="value"] pairs.
+Please check the important pairs on [Map Features](https://wiki.openstreetmap.org/wiki/Map_Features) OSM Wiki page.
 
-Users can interact with the results
-* Users can select the features on the map.
+## Use Case
 
-System can show the search results
-* System will display the query results on the map. Results can be point, polygon or linesegment
-* System will higlight the feature on the map on mouseovers  
-* System will show popup on the map if user selects the feature on the map 
+Actors: User, Application
 
+### User
+#### Selects an OSM key
+* Users can select an OSM key and hits the search button
+
+#### Interacts with the search results
+* Users can select a search result on the list.
+* Users can deselect the last selection (like toggle button)
+
+#### Interacts with the map
+* User can move, zoom on the map.
+
+### Application
+#### Shows the initial data
+* To show initial data on the map, one of the API result is saved.
+* Initially, related search key is selected on the search box.
+
+#### Makes the search
+* API parameters are prepared based on the visible area on the map and selected key.
+* Make API request to https://overpass-api.de/api/interpreter.
+
+#### Blocks the search on some cases
+* To reduce API call result size, zoom level 14 and high is allowed.
+
+#### Shows the search results
+* The API results be displayed on the list.
+* The API results be also displayed on the map.
+
+#### Displays the selected feature
+* Based on the selected feature, application highlights other related features on the map.
+* The map will be centered on the selected feature coordinate.
+* Application also shows a popup on the map at the selected feature location.
+
+## Faced Problems & Solutions
+### API decision
+I first plan to make api calls by using Nominatim (https://wiki.openstreetmap.org/wiki/Nominatim) search api.
+But in this case it is hard to categorize the results. So I decided to use the Overpass API.
+
+### Unit Tests For React & Mapbox GL JS
+I found mapbox-gl-js-mock (https://github.com/mapbox/mapbox-gl-js-mock) but I took some errors might be related with version.
+
+## Feature Works
 
 ## Available Scripts
 
