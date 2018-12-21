@@ -3,8 +3,8 @@ import './App.css';
 import { Grid, Row, Col} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import MapContainer from './containers/MapContainer'
-import SearchBox from './containers/SearchBox'
-import SearchResultList from './containers/SearchResultList'
+import SearchBox from './components/SearchBox'
+import SearchResultList from './components/SearchResultList'
 
 class App extends Component {
   render() {
