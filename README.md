@@ -56,8 +56,11 @@ Actors: User, Application
 
 ## Faced Problems & Solutions
 ### API decision
-I first plan to make api calls by using Nominatim (https://wiki.openstreetmap.org/wiki/Nominatim) search api.
+I first plan to make api calls by using [Nominatim](https://wiki.openstreetmap.org/wiki/Nominatim) search api.
 But in this case it is hard to categorize the results. So I decided to use the Overpass API.
+
+### Converting OSM Data to GeoJSON
+Nominatim api returns features as a geoJSON format. But Overpass API api returns data as OSM Node, Way and Relation. So [osmtogeojson](https://github.com/tyrasd/osmtogeojson) module used to convert OSM data to GeoJSON. 
 
 ### Mapbox Redux Integration
 For Redux integration [@mapbox/mapbox-gl-redux](https://github.com/mapbox/mapbox-gl-redux) is used. This module added as middleware to the Redux store and a controls of Mapbox GL JS map be synced with the application state.

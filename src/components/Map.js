@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import {AccessTokenMapboxGL} from '../constants'
 import { bindActionCreators } from 'redux'
 import { mapActionCreatorsSynced } from '../redux/actions'
+import { InitialState } from '../constants'
 
 mapboxgl.accessToken = AccessTokenMapboxGL;
 
@@ -19,8 +20,8 @@ class Map extends React.Component {
     this.map = new mapboxgl.Map({
       container: this.mapEl,
       style: 'mapbox://styles/mapbox/streets-v9',
-      center: [0, 0],
-      zoom: 2
+      center: InitialState.center,
+      zoom: InitialState.map.zoom
     });
 
     const comp = this
