@@ -8,6 +8,7 @@ export function fetchSearchResult (selectedOsmKey, bbox) {
     axios.get(url).then((response) => dispatch({
       type: FETCH_SEARCH_RESULTS,
       data: response.data,
+      lastSearchedKey: selectedOsmKey
     })).catch((response) => dispatch({
       type: FETCH_SEARCH_RESULTS,
       data: {elements: []},

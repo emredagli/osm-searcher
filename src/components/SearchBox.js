@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { fetchSearchResult } from '../redux/actions'
 import { FormGroup, Button, InputGroup, FormControl } from 'react-bootstrap'
+import classNames from 'classnames'
 
 import { SearchOSMKeys } from '../constants'
 
@@ -14,7 +15,7 @@ class SearchBox extends Component {
     this.onSearchFormSubmit = this.onSearchFormSubmit.bind(this)
 
     this.state = {
-      value: SearchOSMKeys[0],
+      value: props.value,
     }
   }
 
@@ -40,7 +41,7 @@ class SearchBox extends Component {
               {SearchOSMKeys.map(key => <option key={key} value={key}>"{key}"</option>)}
             </FormControl>
             <InputGroup.Button>
-              <Button type="submit" className='btn-primary'>Search on the map</Button>
+              <Button type="submit" className={classNames('btn-primary', 'search-button')}>Search on the map</Button>
             </InputGroup.Button>
           </InputGroup>
         </FormGroup>
@@ -51,7 +52,8 @@ class SearchBox extends Component {
 
 function mapStateToProps (state) {
   return {
-    bounds: state.map.bounds
+    bounds: state.map.bounds,
+    value: state.search.lastSearchedKey
   }
 }
 

@@ -4,7 +4,9 @@ import { convertOSMOverpassResultToGeoJSON } from './libs/geoJson'
 // Taken from Mapbox
 const AccessTokenMapboxGL = 'pk.eyJ1IjoiZW1yZWRhZ2xpIiwiYSI6ImNqMXJ3ZmEzMzAwMHkycXJ6NHBwY3k2bmUifQ.aa0YeG9FVaAV8jSP0m1Vzw';
 
-const OverpassSearchUrl = 'https://overpass-api.de/api/interpreter?data='
+const OverpassAPIUrl = 'https://overpass-api.de/api/interpreter';
+
+const OverpassSearchUrl = `${OverpassAPIUrl}?data=`
 
 const GetOverpassSearchParams = (osmKey, bbox) => {
   const bboxStr = `${bbox._sw.lat},${bbox._sw.lng},${bbox._ne.lat},${bbox._ne.lng}`
@@ -38,5 +40,5 @@ const InitialState = {
 
 const SearchOSMKeys = ['landuse', 'tourism'];
 
-export { AccessTokenMapboxGL, OverpassSearchUrl, GetOverpassSearchParams }
+export { AccessTokenMapboxGL, OverpassSearchUrl, OverpassAPIUrl, GetOverpassSearchParams }
 export { InitialState, SearchOSMKeys }
