@@ -23,12 +23,14 @@ out skel qt;`.replace(/\n/gm, '')
 }
 
 const initialGeoJSON = convertOSMOverpassResultToGeoJSON(overpassApiInitialResultData)
+const initialSearch = 'landuse';
 
 const InitialState = {
   app: {},
   map: {zoom: 14},
   search: {
     geoJSON: initialGeoJSON,
+    lastSearchedKey: initialSearch
   },
   center: [13.3969553, 52.5155642]
 }

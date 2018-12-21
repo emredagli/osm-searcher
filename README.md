@@ -34,7 +34,10 @@ Actors: User, Application
 
 ### Application
 #### Shows the initial data
-* To show initial data on the map, one of the API result is saved.
+* To show initial data on the map, one of the API result is saved. There are 2 reasons for this:
+    * To Show the initial results instantly
+    * Not to use Overpass API resources unnecessarily
+    * And it also speeds up development :)
 * Initially, related search key is selected on the search box.
 
 #### Makes the search
