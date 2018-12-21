@@ -14,6 +14,9 @@ class Map extends React.Component {
   constructor (props) {
     super(props);
     this.mapDefaultSourceId = 'osm-search-source';
+    this.polygonLayerSuffix = '-polygon-layer';
+    this.lineLayerSuffix = '-line-layer';
+    this.pointLayerSuffix = '-point-layer';
     this.map = null;
     this.mapEl = null;
   }
@@ -68,7 +71,7 @@ class Map extends React.Component {
 
   addLayersToSource (sourceId) {
     this.map.addLayer({
-      id: sourceId + '-Polygon-Layer',
+      id: sourceId + this.polygonLayerSuffix,
       type: 'fill',
       source: sourceId,
       paint: {
@@ -81,11 +84,41 @@ class Map extends React.Component {
         ['Polygon', 'MultiPolygon'],
         true,
         false],
-    })
+    });
+
+    this.map.addLayer({
+      id: sourceId + this.lineLayerSuffix,
+      type: 'line',
+      source: sourceId,
+      layout: {
+        'line-join': 'round',
+        'line-cap': 'round',
+      },
+      paint: {
+        'line-opacity': 0.7,
+        'line-width': 4,
+      },
+      filter: ['==', '$type', 'LineString'],
+    });
+
+    this.map.addLayer({
+      id: sourceId + this.pointLayerSuffix,
+      type: 'circle',
+      source: sourceId,
+      paint: {
+        'circle-radius': 4,
+        'circle-stroke-width': 1,
+        'circle-stroke-color': '#000000',
+      },
+      filter: ['==', '$type', 'Point'],
+    });
+
   }
 
   setPaintPropertiesOfLayers () {
-    this.setPaintPropertiesOfLayer(this.mapDefaultSourceId + '-Polygon-Layer', 'fill-color')
+    this.setPaintPropertiesOfLayer(this.mapDefaultSourceId + this.polygonLayerSuffix, 'fill-color');
+    this.setPaintPropertiesOfLayer(this.mapDefaultSourceId + this.lineLayerSuffix, 'line-color');
+    this.setPaintPropertiesOfLayer(this.mapDefaultSourceId + this.pointLayerSuffix, 'circle-color');
   }
 
   setPaintPropertiesOfLayer (layerId, paintProperty) {
