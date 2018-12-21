@@ -59,6 +59,9 @@ Actors: User, Application
 I first plan to make api calls by using Nominatim (https://wiki.openstreetmap.org/wiki/Nominatim) search api.
 But in this case it is hard to categorize the results. So I decided to use the Overpass API.
 
+### Mapbox Redux Integration
+For Redux integration [@mapbox/mapbox-gl-redux](https://github.com/mapbox/mapbox-gl-redux) is used. This module added as middleware to the Redux store and a controls of Mapbox GL JS map be synced with the application state.
+
 ### Unit Tests For React & Mapbox GL JS
 I found mapbox-gl-js-mock (https://github.com/mapbox/mapbox-gl-js-mock) but I took some errors might be related with version.
 

@@ -13,3 +13,9 @@ export function fetchSearchResult (selectedOsmKey) {
     });
   }
 }
+
+export function mapActionCreatorsSynced (mapSyncAction) {
+  return (dispatch) => {
+    dispatch(mapSyncAction);
+  }
+}
