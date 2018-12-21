@@ -1,5 +1,6 @@
 import overpassApiInitialResultData from './assets/data/initial-overpass-api-data'
 import { convertOSMOverpassResultToGeoJSON } from './libs/geoJson'
+import { getColorMapFromProperty, convertColorMapToColorStops } from './libs/colorMap'
 
 // Taken from Mapbox
 const AccessTokenMapboxGL = 'pk.eyJ1IjoiZW1yZWRhZ2xpIiwiYSI6ImNqMXJ3ZmEzMzAwMHkycXJ6NHBwY3k2bmUifQ.aa0YeG9FVaAV8jSP0m1Vzw';
@@ -32,13 +33,16 @@ const AppStates = {
 
 const initialGeoJSON = convertOSMOverpassResultToGeoJSON(overpassApiInitialResultData)
 const initialSearch = 'landuse';
+const colorMap = getColorMapFromProperty(initialGeoJSON, initialSearch)
 
 const InitialState = {
   app: {},
   map: {zoom: 14, bounds: null},
   search: {
     geoJSON: initialGeoJSON,
-    lastSearchedKey: initialSearch
+    lastSearchedKey: initialSearch,
+    resultColorMap: colorMap,
+    colorStops: convertColorMapToColorStops(colorMap),
   },
   center: [13.3969553, 52.5155642]
 }

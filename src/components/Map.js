@@ -25,6 +25,11 @@ class Map extends React.Component {
     if (prevProps.geoJSON !== this.props.geoJSON) {
       this.updateSource(this.mapDefaultSourceId, this.props.geoJSON);
     }
+
+    if (prevProps.colorStops !== this.props.colorStops) {
+      this.setPaintPropertiesOfLayers()
+    }
+
   }
 
   componentWillUnmount() {
@@ -34,7 +39,7 @@ class Map extends React.Component {
   componentDidMount() {
     this.map = new mapboxgl.Map({
       container: this.mapEl,
-      style: 'mapbox://styles/mapbox/streets-v9',
+      style: 'mapbox://styles/mapbox/light-v9',
       center: InitialState.center,
       zoom: InitialState.map.zoom
     });
@@ -125,8 +130,7 @@ class Map extends React.Component {
     this.map.setPaintProperty(layerId, paintProperty, {
       type: 'categorical',
       property: this.props.lastSearchedKey,
-      // TODO: Need to map props value to color function. Hash can be used for consistency.
-      stops: [['grass','#FF00FF'],['residental','#FFFF00']],
+      stops: this.props.colorStops
     })
   }
 
@@ -141,6 +145,7 @@ function mapStateToProps (state) {
   return {
     geoJSON: state.search.geoJSON,
     lastSearchedKey: state.search.lastSearchedKey,
+    colorStops: state.search.colorStops
   }
 }
 
