@@ -17,13 +17,14 @@ React Bootstrap is used for UI framework.
 OSM vector data contains features and its properties. Properties are ["key"="value"] pairs.
 Please check the important pairs on [Map Features](https://wiki.openstreetmap.org/wiki/Map_Features) OSM Wiki page.
 
-## Use Case
+## Use Cases
 
 Actors: User, Application
 
 ### User
 #### Selects an OSM key
-* Users can select an OSM key and hits the search button
+* Users can select an OSM key
+* Users can refresh the result by Search button
 
 #### Interacts with the search results
 * Users can select a search result on the list.
@@ -74,7 +75,13 @@ I found mapbox-gl-js-mock (https://github.com/mapbox/mapbox-gl-js-mock) but I to
 ### Finding The Center of GeoJSON Feature
 After user select a feature it is better to make it center on the map. Unfortunately, Mapbox GL JS has no lib function to get center of a geoJSON feature. That can be point, linestring, polygon or multipolygon. So [Turf Library](http://turfjs.org/docs/) used to find the center of a feature.
 
+### Selecting Feature on The Map
+Since Mapbox GL JS geoJSON feature ids should be a number, I could not make highlight effect from the map by hovering or selecting. "osmtogeojson" module generates feature ids as a string with format: 'node/XXXX'.
+
 ## Feature Works
+* Full test coverage after mocking Mapbox GL JS
+* Mobile view fixes
+* Selecting features from map
 
 ## Available Scripts
 
