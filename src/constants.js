@@ -35,13 +35,14 @@ const initialSearch = 'landuse';
 const colorMap = getColorMapFromProperty(initialGeoJSON, initialSearch)
 
 const InitialState = {
-  app: {},
+  app: {status: AppStates.IDLE},
   map: {zoom: 14, bounds: null},
   search: {
     geoJSON: initialGeoJSON,
     lastSearchedKey: initialSearch,
     resultColorMap: colorMap,
     colorStops: convertColorMapToColorStops(colorMap),
+    selectedFeature: null,
   },
   center: [13.3969553, 52.5155642]
 }
@@ -57,7 +58,13 @@ const SearchOSMKeys = [
   'shop',
   'historic',
   'public_transport'
-]
+];
+
+const AppStyle = {
+  NonHighlightedColor: '#dddddd'
+  // TODO: map layer constant paint properties can be defined here.
+}
+
 
 export { AccessTokenMapboxGL, OverpassSearchUrl, OverpassAPIUrl, GetOverpassSearchParams }
-export { InitialState, SearchOSMKeys, AppStates }
+export { InitialState, SearchOSMKeys, AppStates, AppStyle }

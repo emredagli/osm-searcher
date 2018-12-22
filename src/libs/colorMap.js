@@ -1,4 +1,5 @@
 import ColorHash from 'color-hash'
+import { AppStyle } from '../constants'
 
 const colorHash = new ColorHash();
 
@@ -21,5 +22,16 @@ export const getColorMapFromProperty = (geoJSON, property) => {
 };
 
 export const convertColorMapToColorStops = (colorMap) => {
-  return Object.keys(colorMap).map((property) => [property, colorMap[property]]);
+  return Object.keys(colorMap).map((propValue) => [propValue, colorMap[propValue]]);
+};
+
+export const getHighlightedColorStops = (colorMap, highlightedPropValue) => {
+  return Object.keys(colorMap).map(
+    (propValue) => [
+      propValue,
+      highlightedPropValue === propValue ?
+        colorMap[propValue] :
+        AppStyle.NonHighlightedColor
+    ]
+  );
 };
