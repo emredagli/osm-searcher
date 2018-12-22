@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { OverpassSearchUrl, GetOverpassSearchParams, AppStates } from '../constants'
-import { FETCH_SEARCH_RESULTS, CHANGE_APP_STATE } from './action-types'
+import { FETCH_SEARCH_RESULTS, CHANGE_APP_STATE, SELECT_FEATURE } from './action-types'
 
 export function fetchSearchResult (selectedOsmKey, bbox) {
   return function (dispatch) {
@@ -30,6 +30,15 @@ export function changeAppState (newState) {
     dispatch({
       type: CHANGE_APP_STATE,
       newState: newState,
+    })
+  }
+}
+
+export function selectFeature (feature) {
+  return (dispatch) => {
+    dispatch({
+      type: SELECT_FEATURE,
+      feature: feature,
     })
   }
 }

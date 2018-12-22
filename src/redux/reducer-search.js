@@ -1,4 +1,4 @@
-import { FETCH_SEARCH_RESULTS } from './action-types'
+import { FETCH_SEARCH_RESULTS, SELECT_FEATURE } from './action-types'
 import { InitialState } from '../constants'
 import { getColorMapFromProperty, convertColorMapToColorStops } from '../libs/colorMap'
 import { convertOSMOverpassResultToGeoJSON } from '../libs/geoJson'
@@ -19,7 +19,12 @@ function reducerSearch(state = InitialState.search, action) {
         resultColorMap: colorMap,
         colorStops: colorStops
       };
-
+    case SELECT_FEATURE:
+      const selectedFeature = state.selectedFeature === action.feature ? null : action.feature;
+      return {
+        ...state,
+        selectedFeature: selectedFeature
+      };
     default:
       return state;
   }
