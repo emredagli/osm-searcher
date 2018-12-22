@@ -1,5 +1,5 @@
 import overpassApiInitialResultData from './assets/data/initial-overpass-api-data'
-import { convertOSMOverpassResultToGeoJSON } from './libs/geoJson'
+import { convertOSMOverpassResultToGeoJSON, sortGeoJSONFeaturesByProperty } from './libs/geoJson'
 import { getColorMapFromProperty, convertColorMapToColorStops } from './libs/colorMap'
 
 // Taken from Mapbox
@@ -30,8 +30,10 @@ const AppStates = {
   IDLE: 'IDLE',
 }
 
-const initialGeoJSON = convertOSMOverpassResultToGeoJSON(overpassApiInitialResultData)
 const initialSearch = 'landuse';
+const initialGeoJSON = convertOSMOverpassResultToGeoJSON(overpassApiInitialResultData);
+sortGeoJSONFeaturesByProperty(initialGeoJSON, initialSearch);
+
 const colorMap = getColorMapFromProperty(initialGeoJSON, initialSearch)
 
 const InitialState = {

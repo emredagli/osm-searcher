@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import mapboxgl from 'mapbox-gl'
 import * as MapboxGLRedux from '@mapbox/mapbox-gl-redux'
 import { connect } from 'react-redux'
@@ -7,6 +8,8 @@ import { bindActionCreators } from 'redux'
 import { mapActionCreatorsSynced } from '../redux/actions'
 import { InitialState } from '../constants'
 import { getCenterOfGeoJSONFeature } from '../libs/geoJson'
+
+import './Map.scss'
 
 mapboxgl.accessToken = AccessTokenMapboxGL;
 
@@ -20,6 +23,7 @@ class Map extends React.Component {
     this.pointLayerSuffix = '-point-layer';
     this.map = null;
     this.mapEl = null;
+    this.selectedFeaturePopup = null;
   }
 
   componentDidUpdate (prevProps) {
@@ -33,8 +37,11 @@ class Map extends React.Component {
 
     if (this.props.selectedFeature) {
       if (prevProps.selectedFeature !== this.props.selectedFeature) {
-        this.setMapCenterByFeature(this.props.selectedFeature)
+        this.setMapCenterByFeature(this.props.selectedFeature);
+        this.displaySelectedFeatureProperties();
       }
+    } else {
+      this.hideSelectedFeatureProperties()
     }
   }
 
@@ -140,9 +147,47 @@ class Map extends React.Component {
     })
   }
 
+  isPointInBounds(point, bounds) {
+    return (
+      (bounds._ne.lng > point.lng && bounds._sw.lng < point.lng) &&
+      (bounds._ne.lat > point.lat && bounds._sw.lat < point.lat)
+    );
+  }
+
   setMapCenterByFeature (feature) {
     const center = getCenterOfGeoJSONFeature(feature);
-    this.map.flyTo({center})
+    if (!this.isPointInBounds(new mapboxgl.LngLat(center[0], center[1]), this.map.getBounds())) {
+      this.map.flyTo({center});
+    }
+  }
+
+  displaySelectedFeatureProperties () {
+    if (this.selectedFeaturePopup) {
+      this.selectedFeaturePopup.remove();
+    }
+
+    const selectedFeatureProps = this.props.selectedFeature.properties;
+    const placeholder = document.createElement('div');
+    ReactDOM.render(<div>
+      <h5>{selectedFeatureProps.name}</h5>
+      <p>[{this.props.lastSearchedKey}={selectedFeatureProps[this.props.lastSearchedKey]}] features highlighted</p>
+    </div>, placeholder);
+
+    const feature = this.props.selectedFeature;
+    this.selectedFeaturePopup = new mapboxgl.Popup({
+        closeOnClick: false,
+        className: 'app-map-popup'
+      })
+      .setLngLat(getCenterOfGeoJSONFeature(feature))
+      .setDOMContent(placeholder)
+      .addTo(this.map);
+  }
+
+  hideSelectedFeatureProperties () {
+    // TODO: check unmountComponentAtNode is required or not.
+    if (this.selectedFeaturePopup) {
+      this.selectedFeaturePopup.remove();
+    }
   }
 
   render() {

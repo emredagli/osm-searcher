@@ -19,19 +19,20 @@ class SearchBox extends Component {
   }
 
   onSearchChange (event) {
+    if (this.props.searchDisabled) {return;}
     this.setState({value: event.target.value})
-    this.search();
+    this.search(event.target.value);
   }
 
   onSearchFormSubmit (event) {
     event.preventDefault();
-    this.search();
+    this.search(this.state.value);
   }
 
-  search () {
+  search (selectedOsmKey) {
     if (this.props.searchDisabled) {return;}
     // Fetch Data From Overpass Api
-    this.props.fetchSearchResult(this.state.value, this.props.bounds);
+    this.props.fetchSearchResult(selectedOsmKey, this.props.bounds);
   }
 
   render () {
