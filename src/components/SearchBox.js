@@ -4,8 +4,7 @@ import { bindActionCreators } from 'redux'
 import { fetchSearchResult } from '../redux/actions'
 import { FormGroup, Button, InputGroup, FormControl } from 'react-bootstrap'
 import classNames from 'classnames'
-
-import { SearchOSMKeys } from '../constants'
+import { SearchOSMKeys, InitialState } from '../constants'
 
 class SearchBox extends Component {
   constructor (props) {
@@ -21,15 +20,26 @@ class SearchBox extends Component {
 
   onSearchChange (event) {
     this.setState({value: event.target.value})
+    this.search();
   }
 
   onSearchFormSubmit (event) {
-    event.preventDefault()
-    // We need to fetch From Overpass Api
+    event.preventDefault();
+    this.search();
+  }
+
+  search () {
+    if (this.props.searchDisabled) {return;}
+    // Fetch Data From Overpass Api
     this.props.fetchSearchResult(this.state.value, this.props.bounds);
   }
 
   render () {
+    let buttonAttributes = {};
+    if (this.props.searchDisabled) {
+      buttonAttributes.title = `Please zoom the map in to search. \nThe zoom level should be greater than ${InitialState.map.zoom}.`;
+    }
+
     return (
       <form onSubmit={this.onSearchFormSubmit}>
         <FormGroup>
@@ -41,7 +51,7 @@ class SearchBox extends Component {
               {SearchOSMKeys.map(key => <option key={key} value={key}>"{key}"</option>)}
             </FormControl>
             <InputGroup.Button>
-              <Button type="submit" className={classNames('btn-primary', 'search-button')}>Search on the map</Button>
+              <Button type="submit" className={classNames('btn-primary', 'search-button', {disabled:this.props.searchDisabled})} {...buttonAttributes}>Search on the map</Button>
             </InputGroup.Button>
           </InputGroup>
         </FormGroup>
@@ -53,7 +63,8 @@ class SearchBox extends Component {
 function mapStateToProps (state) {
   return {
     bounds: state.map.bounds,
-    value: state.search.lastSearchedKey
+    value: state.search.lastSearchedKey,
+    searchDisabled: state.map.zoom < InitialState.map.zoom
   }
 }
 

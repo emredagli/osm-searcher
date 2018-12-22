@@ -11,7 +11,6 @@ const OverpassSearchUrl = `${OverpassAPIUrl}?data=`
 
 const GetOverpassSearchParams = (osmKey, bbox) => {
   const bboxStr = `${bbox._sw.lat},${bbox._sw.lng},${bbox._ne.lat},${bbox._ne.lng}`
-  console.log(bboxStr);
 
   // Query format generated from https://overpass-turbo.eu/
   return `
@@ -47,7 +46,18 @@ const InitialState = {
   center: [13.3969553, 52.5155642]
 }
 
-const SearchOSMKeys = ['landuse', 'tourism'];
+const SearchOSMKeys = [
+  'landuse',
+  'tourism',
+  'amenity',
+  'leisure',
+  'natural',
+  'waterway',
+  'power',
+  'shop',
+  'historic',
+  'public_transport'
+]
 
 export { AccessTokenMapboxGL, OverpassSearchUrl, OverpassAPIUrl, GetOverpassSearchParams }
 export { InitialState, SearchOSMKeys, AppStates }
