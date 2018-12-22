@@ -22,7 +22,7 @@ class App extends Component {
             </Col>
           </Row>
           <Row className="search-result-row">
-            <Col xs={12} sm={4} className='search-result-col'>
+            <Col xsHidden sm={4} className='search-result-col'>
               <SearchResultList/>
             </Col>
             <Col xs={12} sm={8} className='search-result-col'>
