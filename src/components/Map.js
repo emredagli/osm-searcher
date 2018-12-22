@@ -6,6 +6,7 @@ import {AccessTokenMapboxGL} from '../constants'
 import { bindActionCreators } from 'redux'
 import { mapActionCreatorsSynced } from '../redux/actions'
 import { InitialState } from '../constants'
+import { getCenterOfGeoJSONFeature } from '../libs/geoJson'
 
 mapboxgl.accessToken = AccessTokenMapboxGL;
 
@@ -30,6 +31,11 @@ class Map extends React.Component {
       this.setPaintPropertiesOfLayers()
     }
 
+    if (this.props.selectedFeature) {
+      if (prevProps.selectedFeature !== this.props.selectedFeature) {
+        this.setMapCenterByFeature(this.props.selectedFeature)
+      }
+    }
   }
 
   componentWillUnmount() {
@@ -134,6 +140,11 @@ class Map extends React.Component {
     })
   }
 
+  setMapCenterByFeature (feature) {
+    const center = getCenterOfGeoJSONFeature(feature);
+    this.map.flyTo({center})
+  }
+
   render() {
     return (
       <div ref={el => this.mapEl = el} className="absolute top right left bottom" />
@@ -144,6 +155,7 @@ class Map extends React.Component {
 function mapStateToProps (state) {
   return {
     geoJSON: state.search.geoJSON,
+    selectedFeature: state.search.selectedFeature,
     lastSearchedKey: state.search.lastSearchedKey,
     colorStops: state.search.colorStops
   }

@@ -71,6 +71,9 @@ For Redux integration [@mapbox/mapbox-gl-redux](https://github.com/mapbox/mapbox
 ### Unit Tests For React & Mapbox GL JS
 I found mapbox-gl-js-mock (https://github.com/mapbox/mapbox-gl-js-mock) but I took some errors might be related with version.
 
+### Finding The Center of GeoJSON Feature
+After user select a feature it is better to make it center on the map. Unfortunately, Mapbox GL JS has no lib function to get center of a geoJSON feature. That can be point, linestring, polygon or multipolygon. So [Turf Library](http://turfjs.org/docs/) used to find the center of a feature.
+
 ## Feature Works
 
 ## Available Scripts

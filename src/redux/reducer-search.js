@@ -16,6 +16,7 @@ function reducerSearch(state = InitialState.search, action) {
         geoJSON: newGeoJSON,
         lastSearchedKey: action.lastSearchedKey || null,
         resultColorMap: colorMap,
+        selectedFeature: null,
         colorStops: convertColorMapToColorStops(colorMap)
       };
     case SELECT_FEATURE:
