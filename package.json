@@ -6,6 +6,7 @@
     "@mapbox/mapbox-gl-redux": "^0.1.0",
     "@turf/turf": "^5.1.6",
     "axios": "^0.18.0",
+    "babel-polyfill": "^6.26.0",
     "bootstrap": "3.3.7",
     "classnames": "^2.2.6",
     "color-hash": "^1.0.3",

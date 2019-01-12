@@ -1,0 +1,10 @@
+@media (max-width: 768px) {
+  .input-group.hide-label-xs {
+    .input-group-addon {
+      display: none;
+    }
+    .form-control:not(:first-child):not(:last-child) {
+      border-radius: 4px 0px 0px 4px;
+    }
+  }
+}

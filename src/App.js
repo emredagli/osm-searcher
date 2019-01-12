@@ -22,10 +22,10 @@ class App extends Component {
             </Col>
           </Row>
           <Row className="search-result-row">
-            <Col xsHidden sm={4} className='search-result-col'>
+            <Col xsHidden sm={4} className='no-padding-right'>
               <SearchResultList/>
             </Col>
-            <Col xs={12} sm={8} className='search-result-col'>
+            <Col xs={12} sm={8}>
               <MapContainer/>
             </Col>
           </Row>

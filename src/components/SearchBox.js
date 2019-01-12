@@ -5,6 +5,7 @@ import { fetchSearchResult } from '../redux/actions'
 import { FormGroup, Button, InputGroup, FormControl } from 'react-bootstrap'
 import classNames from 'classnames'
 import { SearchOSMKeys, InitialState } from '../constants'
+import './SearchBox.scss'
 
 class SearchBox extends Component {
   constructor (props) {
@@ -44,7 +45,7 @@ class SearchBox extends Component {
     return (
       <form onSubmit={this.onSearchFormSubmit}>
         <FormGroup>
-          <InputGroup>
+          <InputGroup className='hide-label-xs'>
             <InputGroup.Addon>
               <a href="https://wiki.openstreetmap.org/wiki/Map_Features" target="_blank" rel="noopener noreferrer">Please select an OSM [key]:</a>
             </InputGroup.Addon>
