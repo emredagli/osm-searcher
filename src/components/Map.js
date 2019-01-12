@@ -5,10 +5,9 @@ import * as MapboxGLRedux from '@mapbox/mapbox-gl-redux'
 import { connect } from 'react-redux'
 import {AccessTokenMapboxGL} from '../constants'
 import { bindActionCreators } from 'redux'
-import { mapActionCreatorsSynced } from '../redux/actions'
+import { mapActionCreatorsSynced, selectFeature  } from '../redux/actions'
 import { InitialState } from '../constants'
 import { getCenterOfGeoJSONFeature } from '../libs/geoJson'
-
 import './Map.scss'
 
 mapboxgl.accessToken = AccessTokenMapboxGL;
@@ -24,6 +23,7 @@ class Map extends React.Component {
     this.map = null;
     this.mapEl = null;
     this.selectedFeaturePopup = null;
+    this.hoveredStateId =  null;
   }
 
   componentDidUpdate (prevProps) {
@@ -65,6 +65,7 @@ class Map extends React.Component {
 
       comp.addSource(comp.mapDefaultSourceId, comp.props.geoJSON)
       comp.addLayersToSource(comp.mapDefaultSourceId)
+      comp.setLayersEvents(comp.mapDefaultSourceId)
       comp.setPaintPropertiesOfLayers()
     })
   }
@@ -93,7 +94,12 @@ class Map extends React.Component {
       type: 'fill',
       source: sourceId,
       paint: {
-        'fill-opacity': 0.6,
+        'fill-opacity': [
+          'case',
+          ['boolean', ['feature-state', 'hover'], false],
+          0.9,
+          0.6,
+        ],
         'fill-outline-color': '#000000',
       },
       filter: [
@@ -113,7 +119,12 @@ class Map extends React.Component {
         'line-cap': 'round',
       },
       paint: {
-        'line-opacity': 0.7,
+        'line-opacity': [
+          'case',
+          ['boolean', ['feature-state', 'hover'], false],
+          1,
+          0.6,
+        ],
         'line-width': 4,
       },
       filter: ['==', '$type', 'LineString'],
@@ -127,10 +138,61 @@ class Map extends React.Component {
         'circle-radius': 4,
         'circle-stroke-width': 1,
         'circle-stroke-color': '#000000',
+        'circle-opacity': [
+          'case',
+          ['boolean', ['feature-state', 'hover'], false],
+          1,
+          0.5,
+        ]
       },
       filter: ['==', '$type', 'Point'],
     });
 
+  }
+
+  setLayersEvents (sourceId) {
+    const self = this
+
+    const layerMouseMove = function (e) {
+      if (e.features.length > 0) {
+        if (self.hoveredStateId) {
+          self.map.setFeatureState({source: sourceId, id: self.hoveredStateId}, {hover: false})
+        }
+        self.hoveredStateId = e.features[0].id
+        self.map.setFeatureState({source: sourceId, id: self.hoveredStateId}, {hover: true})
+        self.map.getCanvas().style.cursor = 'pointer';
+      }
+    }
+
+    const layerMoveLeave = function () {
+      if (self.hoveredStateId) {
+        self.map.setFeatureState({source: sourceId, id: self.hoveredStateId}, {hover: false})
+      }
+      self.hoveredStateId = null
+      self.map.getCanvas().style.cursor = ''
+    }
+
+    const layerClick = function (e) {
+      if (e.features.length > 0 && self.props.geoJSON) {
+        const clickedMapFeatureId = e.features[0].properties.id;
+        const foundFeature = self.props.geoJSON.features.find((feature) => feature.id === clickedMapFeatureId);
+        if (foundFeature) {
+          self.props.selectFeature(foundFeature);
+        }
+      }
+    }
+
+    this.map.on('mousemove', sourceId + this.polygonLayerSuffix, layerMouseMove)
+    this.map.on('mouseleave', sourceId + this.polygonLayerSuffix, layerMoveLeave)
+    this.map.on('click', sourceId + this.polygonLayerSuffix, layerClick)
+
+    this.map.on('mousemove', sourceId + this.pointLayerSuffix, layerMouseMove)
+    this.map.on('mouseleave', sourceId + this.pointLayerSuffix, layerMoveLeave)
+    this.map.on('click', sourceId + this.pointLayerSuffix, layerClick)
+
+    this.map.on('mousemove', sourceId + this.lineLayerSuffix, layerMouseMove)
+    this.map.on('mouseleave', sourceId + this.lineLayerSuffix, layerMoveLeave)
+    this.map.on('click', sourceId + this.lineLayerSuffix, layerClick)
   }
 
   setPaintPropertiesOfLayers () {
@@ -207,6 +269,6 @@ function mapStateToProps (state) {
 }
 
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators({mapActionCreatorsSynced}, dispatch)
+  return bindActionCreators({mapActionCreatorsSynced, selectFeature}, dispatch)
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Map)

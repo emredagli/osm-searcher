@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom';
 import { Panel, ListGroup } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { selectFeature } from '../redux/actions'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import scrollIntoView from 'scroll-into-view-if-needed'
 
 import './SearchResultList.scss'
 
@@ -16,6 +18,28 @@ function FeatureListItem ({color, propValue, name, selected, clickHandler}) {
 }
 
 class SearchResultList extends Component {
+  constructor (props) {
+    super(props)
+    this.listContainer = null;
+    this.listContainerEl = null;
+  }
+
+  componentDidUpdate (prevProps) {
+    if (this.props.selectedFeature && this.listContainer) {
+      if (prevProps.selectedFeature !== this.props.selectedFeature) {
+        scrollIntoView(this.listContainerEl.querySelector('.active'), {
+          scrollMode: 'if-needed',
+          block: 'center'
+        })
+      }
+    }
+  }
+
+  componentDidMount() {
+    this.listContainerEl = ReactDOM.findDOMNode(this.listContainer);
+    // set el height and width etc.
+  }
+
   featureSelected(index) {
     this.props.selectFeature(this.props.features[index]);
   }
@@ -27,7 +51,7 @@ class SearchResultList extends Component {
         <Panel.Heading>
           <Panel.Title componentClass="h3">{`${this.props.features.length} feature(s) found for key="${this.props.lastSearchedKey}"`}</Panel.Title>
         </Panel.Heading>
-        <ListGroup componentClass="ul">{this.props.features.map(
+        <ListGroup ref={(el) => this.listContainer = el} componentClass="ul">{this.props.features.map(
           (feature, index) => {
             const {properties} = feature;
             const lastSearchedKey = this.props.lastSearchedKey;
