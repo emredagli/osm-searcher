@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/osm-searcher/precache-manifest.834876d30a79bcdaee57b3dbdff53988.js"
+  "/osm-searcher/precache-manifest.51612eb5ef651237e229220900b22e1d.js"
 );
 
 workbox.clientsClaim();
